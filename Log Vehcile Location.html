@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Log Vehicle Location with VIN</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 24px;
+      color: #2c3e50;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 0.03em;
+    }
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #34495e;
+      font-size: 1rem;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 1.8px solid #d1d9e6;
+      border-radius: 6px;
+      transition: border-color 0.3s ease;
+      outline-offset: 2px;
+    }
+    input[type="text"]:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    }
+    button {
+      margin-top: 20px;
+      background-color: #3498db;
+      border: none;
+      padding: 14px 0;
+      width: 100%;
+      font-size: 1.1rem;
+      color: white;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #response {
+      margin-top: 24px;
+      min-height: 24px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #2ecc71;
+      user-select: text;
+      word-break: break-word;
+    }
+    #response.error {
+      color: #e74c3c;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 10px;
+      }
+      .container {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Log Vehicle Location</h2>
+    <form id="vinForm" autocomplete="off">
+      <label for="input">Enter vehicle info (e.g., <em>2006 Toyota vin 2640 Reza</em>):</label>
+      <input
+        type="text"
+        id="input"
+        name="input"
+        placeholder="2006 Toyota vin 2640 Reza"
+        required
+        spellcheck="false"
+      />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="response" aria-live="polite"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('vinForm');
+    const responseElem = document.getElementById('response');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      responseElem.classList.remove('error');
+      responseElem.textContent = 'Processing...';
+
+      let inputValue = document.getElementById('input').value.trim();
+
+      // Extract location (last word after "in" or after VIN)
+      let locationMatch = inputValue.match(/in\s+(\w+)$/i);
+      if (!locationMatch) {
+        const vinMatch = inputValue.match(/vin\s*[:\-]?\s*\d{3,}/i);
+        if (vinMatch) {
+          const vinIndex = vinMatch.index + vinMatch[0].length;
+          locationMatch = inputValue.slice(vinIndex).trim().match(/^(\w+)/);
+        }
+      }
+      let location = locationMatch ? locationMatch[1] : '';
+
+      if (!location) {
+        responseElem.classList.add('error');
+        responseElem.textContent = '❌ Could not detect location in input.';
+        return;
+      }
+
+      // Format current datetime string
+      const now = new Date();
+      const options = { 
+        year: 'numeric', month: 'numeric', day: 'numeric',
+        hour: 'numeric', minute: 'numeric',
+        hour12: true 
+      };
+      const formattedDateTime = now.toLocaleString(undefined, options);
+
+      // Append datetime to location
+      const locationWithDateTime = `${location} - ${formattedDateTime}`;
+
+      // Replace old location word with new one in input string
+      let newInput = inputValue.replace(/(in\s+)?\w+$/, locationWithDateTime);
+
+      // Google Apps Script Web App URL (replace with your own)
+      const url = 'https://script.google.com/macros/s/AKfycbyuoZe9XT0vjqkH5DdfXp5g9O2LDU_LAyFoSxHmTJ2_yFFBnyCbz0pu9HBKR7VmZGiB/exec';
+
+      fetch(url + '?input=' + encodeURIComponent(newInput))
+        .then(resp => resp.text())
+        .then(text => {
+          if (text.startsWith('❌')) {
+            responseElem.classList.add('error');
+          } else {
+            responseElem.classList.remove('error');
+            form.reset();
+          }
+          responseElem.textContent = text;
+        })
+        .catch(err => {
+          responseElem.classList.add('error');
+          responseElem.textContent = '❌ Error: ' + err.message;
+        });
+    });
+  </script>
+</body>
+</html>
