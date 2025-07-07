@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Selection</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#3b82f6',secondary:'#64748b'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Inter', sans-serif;
+min-height: 100vh;
+background-color: #f9fafb;
+}
+.page {
+opacity: 0;
+display: none;
+transition: opacity 0.3s ease;
+}
+.page.active {
+opacity: 1;
+display: flex;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="min-h-screen flex flex-col">
+<header class="bg-white shadow-sm py-3 md:py-4">
+<div class="container mx-auto px-4 flex items-center justify-center">
+<h1 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Pre Purchase Inspection LLC</h1>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center p-4 md:p-6">
+<!-- Page 1: Service Type Selection -->
+<div id="page1" class="page active w-full max-w-md px-4 md:px-0">
+<div class="w-full bg-white rounded-lg shadow-md p-6 md:p-8">
+<h2 class="text-xl md:text-2xl font-semibold text-center text-gray-800 mb-6 md:mb-8">Select Your Service Type</h2>
+<div class="space-y-4">
+<button id="retailBtn" class="w-full bg-white border border-gray-200 hover:border-primary text-gray-800 font-medium py-4 px-6 !rounded-button flex items-center justify-between shadow-sm hover:shadow transition-all duration-300 hover:scale-[1.02] whitespace-nowrap">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-shopping-bag-line text-primary ri-lg"></i>
+</div>
+<span>Retail</span>
+</div>
+<i class="ri-arrow-right-line ri-lg text-gray-400"></i>
+</button>
+<button id="dealershipBtn" class="w-full bg-white border border-gray-200 hover:border-primary text-gray-800 font-medium py-4 px-6 !rounded-button flex items-center justify-between shadow-sm hover:shadow transition-all duration-300 hover:scale-[1.02] whitespace-nowrap">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-building-line text-primary ri-lg"></i>
+</div>
+<span>Dealership</span>
+</div>
+<i class="ri-arrow-right-line ri-lg text-gray-400"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Page 2: Retail Payment Options -->
+<div id="page2" class="page w-full max-w-md px-4 md:px-0">
+<div class="w-full bg-white rounded-lg shadow-md p-6 md:p-8">
+<div class="flex items-center mb-6">
+<button id="backToPage1FromRetail" class="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors duration-300">
+<i class="ri-arrow-left-line ri-lg text-gray-600"></i>
+</button>
+<h2 class="text-lg md:text-2xl font-semibold text-center text-gray-800 flex-grow">Retail Services – Choose a Payment Option</h2>
+</div>
+<div class="space-y-4">
+<a href="https://square.link/u/glkMoZqr" target="_blank" class="w-full bg-white border border-gray-200 hover:border-primary text-gray-800 font-medium py-4 px-6 !rounded-button flex items-center justify-between shadow-sm hover:shadow transition-all duration-300 hover:scale-[1.02] whitespace-nowrap">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-shield-check-line text-primary ri-lg"></i>
+</div>
+<span>🔹 Safety Inspection</span>
+</div>
+<i class="ri-external-link-line ri-lg text-gray-400"></i>
+</a>
+<a href="https://square.link/u/jIYe82nU" target="_blank" class="w-full bg-white border border-gray-200 hover:border-primary text-gray-800 font-medium py-4 px-6 !rounded-button flex items-center justify-between shadow-sm hover:shadow transition-all duration-300 hover:scale-[1.02] whitespace-nowrap">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-file-search-line text-primary ri-lg"></i>
+</div>
+<span>🔹 Pre-Purchase Inspection</span>
+</div>
+<i class="ri-external-link-line ri-lg text-gray-400"></i>
+</a>
+</div>
+</div>
+</div>
+<!-- Page 3: Dealership Payment Options -->
+<div id="page3" class="page w-full max-w-md px-4 md:px-0">
+<div class="w-full bg-white rounded-lg shadow-md p-6 md:p-8">
+<div class="flex items-center mb-6">
+<button id="backToPage1FromDealership" class="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors duration-300">
+<i class="ri-arrow-left-line ri-lg text-gray-600"></i>
+</button>
+<h2 class="text-lg md:text-2xl font-semibold text-center text-gray-800 flex-grow">Dealership Services – Choose a Payment Option</h2>
+</div>
+<div class="space-y-4">
+<a href="https://square.link/u/glkMoZqr" target="_blank" class="w-full bg-white border border-gray-200 hover:border-primary text-gray-800 font-medium py-4 px-6 !rounded-button flex items-center justify-between shadow-sm hover:shadow transition-all duration-300 hover:scale-[1.02] whitespace-nowrap">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-shield-check-line text-primary ri-lg"></i>
+</div>
+<span>🔸 Safety Inspection</span>
+</div>
+<i class="ri-external-link-line ri-lg text-gray-400"></i>
+</a>
+<a href="https://square.link/u/S7SZpJEi" target="_blank" class="w-full bg-white border border-gray-200 hover:border-primary text-gray-800 font-medium py-4 px-6 !rounded-button flex items-center justify-between shadow-sm hover:shadow transition-all duration-300 hover:scale-[1.02] whitespace-nowrap">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-file-search-line text-primary ri-lg"></i>
+</div>
+<span>🔸 Pre-Purchase Inspection</span>
+</div>
+<i class="ri-external-link-line ri-lg text-gray-400"></i>
+</a>
+<a href="https://square.link/u/54gconHg" target="_blank" class="w-full bg-white border border-gray-200 hover:border-primary text-gray-800 font-medium py-4 px-6 !rounded-button flex items-center justify-between shadow-sm hover:shadow transition-all duration-300 hover:scale-[1.02] whitespace-nowrap">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-file-list-3-line text-primary ri-lg"></i>
+</div>
+<span>🔸 Combined: Safety & Pre-Purchase</span>
+</div>
+<i class="ri-external-link-line ri-lg text-gray-400"></i>
+</a>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white shadow-sm py-3 md:py-4 mt-auto">
+<div class="container mx-auto px-4 text-center text-gray-500 text-xs md:text-sm">
+<p>© 2025 Pre Purchase Inspection LLC. All rights reserved.</p>
+<p class="mt-1">25354 Pleasant Valley Rd STE 135, Chantilly, VA 20152</p>
+<p class="mt-1">(571)349-6760</p>
+</div>
+</footer>
+</div>
+<script id="navigation-script">
+document.addEventListener('DOMContentLoaded', function() {
+const pages = document.querySelectorAll('.page');
+const retailBtn = document.getElementById('retailBtn');
+const dealershipBtn = document.getElementById('dealershipBtn');
+const backToPage1FromRetail = document.getElementById('backToPage1FromRetail');
+const backToPage1FromDealership = document.getElementById('backToPage1FromDealership');
+function showPage(pageId) {
+pages.forEach(page => {
+page.classList.remove('active');
+});
+document.getElementById(pageId).classList.add('active');
+}
+retailBtn.addEventListener('click', function() {
+showPage('page2');
+});
+dealershipBtn.addEventListener('click', function() {
+showPage('page3');
+});
+backToPage1FromRetail.addEventListener('click', function() {
+showPage('page1');
+});
+backToPage1FromDealership.addEventListener('click', function() {
+showPage('page1');
+});
+// Add loading indicator for payment links
+const paymentLinks = document.querySelectorAll('a[href^="https://square.link"]');
+paymentLinks.forEach(link => {
+link.addEventListener('click', function() {
+const originalContent = this.innerHTML;
+this.innerHTML = `<div class="flex items-center justify-center w-full"><i class="ri-loader-4-line ri-spin ri-lg mr-2"></i> Redirecting to payment...</div>`;
+// Reset after 1 second (the link will likely have navigated away by then)
+setTimeout(() => {
+this.innerHTML = originalContent;
+}, 1000);
+});
+});
+});
+</script>
+</body>
+</html>
